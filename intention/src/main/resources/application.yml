@@ -1,8 +1,8 @@
 server:
-  port: 8000
+  port: 8001
 spring:
   application:
-    name: qbike-uc    # 项目名称尽量用小写
+    name: qbike-intention    # 项目名称尽量用小写
   jpa:
     generate-ddl: false
     show-sql: true
