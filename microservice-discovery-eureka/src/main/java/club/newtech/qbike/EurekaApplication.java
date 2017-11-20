@@ -1,4 +1,4 @@
-package com.itmuch.cloud.study;
+package club.newtech.qbike;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
