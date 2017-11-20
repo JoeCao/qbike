@@ -8,6 +8,7 @@ import javax.persistence.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
+@Table(name="T_USER")
 @Data
 public class User {
     @Id

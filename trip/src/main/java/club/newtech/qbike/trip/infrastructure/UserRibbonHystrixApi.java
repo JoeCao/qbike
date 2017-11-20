@@ -1,6 +1,6 @@
-package club.newtech.qbike.domain.core.service;
+package club.newtech.qbike.trip.infrastructure;
 
-import club.newtech.qbike.domain.core.vo.User;
+import club.newtech.qbike.trip.domain.core.vo.Driver;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class UserRibbonHystrixService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRibbonHystrixService.class);
+public class UserRibbonHystrixApi {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRibbonHystrixApi.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -21,8 +21,8 @@ public class UserRibbonHystrixService {
      * @return 通过id查询到的用户
      */
     @HystrixCommand(fallbackMethod = "fallback")
-    public User findById(Integer id) {
-        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, User.class);
+    public Driver findById(Integer id) {
+        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Driver.class);
     }
 
     /**
@@ -31,12 +31,12 @@ public class UserRibbonHystrixService {
      * @param id id
      * @return 默认的用户
      */
-    public User fallback(Integer id) {
-        UserRibbonHystrixService.LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
-        User user = new User();
-        user.setId(-1);
-        user.setName("default username");
-        user.setMobile("0000");
-        return user;
+    public Driver fallback(Integer id) {
+        UserRibbonHystrixApi.LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
+        Driver driver = new Driver();
+        driver.setId(-1);
+        driver.setName("default driver");
+        driver.setMobile("0000");
+        return driver;
     }
 }
