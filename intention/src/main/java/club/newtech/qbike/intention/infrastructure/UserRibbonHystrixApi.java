@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 @Service
 public class UserRibbonHystrixApi {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRibbonHystrixApi.class);
@@ -22,7 +24,14 @@ public class UserRibbonHystrixApi {
      */
     @HystrixCommand(fallbackMethod = "fallback")
     public Customer findById(Integer id) {
-        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Customer.class);
+//        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Customer.class);
+        Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
+        Customer customerVo = new Customer();
+        customerVo.setId(id);
+        customerVo.setMobile(String.valueOf(ret.get("mobile")));
+        customerVo.setName(String.valueOf(ret.get("name")));
+        customerVo.setType(String.valueOf(ret.get("type")));
+        return customerVo;
     }
 
     /**

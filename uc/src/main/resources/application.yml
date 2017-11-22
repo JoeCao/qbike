@@ -13,7 +13,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/accountdemo
     username: root
     password:
-
+    tomcat:
+      max-active: 5
+      min-idle: 1
                       # 指定数据源类型
 #    schema: classpath:schema.sql        # 指定h2数据库的建表脚本
 #    data: classpath:data.sql            # 指定h2数据库的insert脚本

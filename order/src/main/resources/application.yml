@@ -1,8 +1,8 @@
 server:
-  port: 8003
+  port: 8002
 spring:
   application:
-    name: qbike-trip    # 项目名称尽量用小写
+    name: qbike-order    # 项目名称尽量用小写
   jpa:
     generate-ddl: false
     show-sql: true
@@ -14,8 +14,17 @@ spring:
     username: root
     password:
     tomcat:
-      max-active: 3
+      max-active: 5
       min-idle: 1
+  redis:
+    host: localhost
+    timeout: 2000
+    database: 2
+    pool:
+      max-active: 20
+      min-idle: 1
+      max-idle: 5
+
 logging:
   level:
     root: INFO

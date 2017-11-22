@@ -14,6 +14,7 @@
         <module>intention</module>
         <module>trip</module>
         <module>api-gateway</module>
+        <module>order</module>
     </modules>
 
     <!-- 使用最新的spring-boot版本 -->

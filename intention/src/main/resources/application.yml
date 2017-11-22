@@ -13,6 +13,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/accountdemo
     username: root
     password:
+    tomcat:
+      max-active: 3
+      min-idle: 1
 logging:
   level:
     root: INFO
