@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-public class TripApplication {
+public class PositionApplication {
     public static void main(String[] args) {
-        SpringApplication.run(TripApplication.class, args);
+        SpringApplication.run(PositionApplication.class, args);
     }
 
     /**

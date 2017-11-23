@@ -14,7 +14,7 @@ import static javax.persistence.EnumType.STRING;
 @ToString
 @Accessors(fluent = false, chain = true)
 @Entity
-public class Trip {
+public class Postion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;

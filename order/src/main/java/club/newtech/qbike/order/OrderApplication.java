@@ -24,19 +24,25 @@ public class OrderApplication {
 
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                            MessageListenerAdapter listenerAdapter) {
+                                            MessageListenerAdapter intentionListener,
+                                            MessageListenerAdapter positionListener) {
 
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.addMessageListener(listenerAdapter, new PatternTopic("intention"));
+        container.addMessageListener(intentionListener, new PatternTopic("intention"));
+        container.addMessageListener(positionListener, new PatternTopic("position"));
         return container;
     }
 
-    @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
+    @Bean(name = "intentionListener")
+    MessageListenerAdapter intentionListener(Receiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
+    @Bean(name = "positionListener")
+    MessageListenerAdapter positionListener(Receiver receiver) {
+        return new MessageListenerAdapter(receiver, "receivePositionUpdate");
+    }
     @Bean
     Receiver receiver(OrderService service) {
         return new Receiver(service);

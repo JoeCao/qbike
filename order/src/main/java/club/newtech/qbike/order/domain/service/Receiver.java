@@ -13,7 +13,7 @@ public class Receiver {
     }
 
     public void receiveMessage(String message) {
-        LOGGER.info("Received <" + message + ">");
+        LOGGER.info("Received new intention <" + message + ">");
         try {
             String[] values = message.split("\\|");
             IntentionVo intentionVo =
@@ -23,5 +23,10 @@ public class Receiver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void receivePositionUpdate(String message) {
+        LOGGER.info("Received position update "+ message);
+
     }
 }

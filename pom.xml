@@ -12,7 +12,7 @@
         <module>microservice-discovery-eureka</module>
         <module>uc</module>
         <module>intention</module>
-        <module>trip</module>
+        <module>position</module>
         <module>api-gateway</module>
         <module>order</module>
     </modules>

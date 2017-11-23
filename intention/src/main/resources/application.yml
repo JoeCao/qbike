@@ -16,6 +16,14 @@ spring:
     tomcat:
       max-active: 3
       min-idle: 1
+  redis:
+    host: localhost
+    timeout: 2000
+    database: 2
+    pool:
+      max-active: 20
+      min-idle: 1
+      max-idle: 5
 logging:
   level:
     root: INFO

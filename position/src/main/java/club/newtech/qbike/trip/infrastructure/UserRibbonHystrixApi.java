@@ -22,7 +22,9 @@ public class UserRibbonHystrixApi {
      */
     @HystrixCommand(fallbackMethod = "fallback")
     public Driver findById(Integer id) {
-        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Driver.class);
+        Driver driver = this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Driver.class);
+        driver.setId(id);
+        return driver;
     }
 
     /**
