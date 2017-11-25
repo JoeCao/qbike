@@ -26,17 +26,22 @@ public class PositionService {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    public void updatePosition(Integer driverId, String position) {
+    public void updatePosition(Integer driverId, Double longitude, Double latitude) {
         Postion trip = positionRepository.findByDriver_Id(driverId);
         if (trip != null) {
-            trip.setMyPostion(position);
+            trip.setPositionLongitude(longitude);
+            trip.setPositionLatitude(latitude);
             positionRepository.save(trip);
         } else {
             Driver driver = userService.findById(driverId);
-            trip = new Postion().setDriver(driver).setMyPostion(position).setStatus(Status.ONLINE);
+            trip = new Postion();
+            trip.setDriver(driver);
+            trip.setPositionLongitude(longitude);
+            trip.setPositionLatitude(latitude);
+            trip.setStatus(Status.ONLINE);
             positionRepository.save(trip);
         }
-        String message = Stream.of(String.valueOf(driverId), position).collect(Collectors.joining("|"));
+        String message = Stream.of(String.valueOf(driverId), String.valueOf(longitude), String.valueOf(latitude)).collect(Collectors.joining("|"));
         redisTemplate.convertAndSend("position", message);
         LOGGER.info("position send " + message);
 

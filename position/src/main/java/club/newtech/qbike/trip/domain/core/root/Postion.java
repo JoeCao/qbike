@@ -18,7 +18,8 @@ public class Postion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;
-    private String myPostion;
+    private Double positionLongitude;
+    private Double positionLatitude;
     @Enumerated(value = STRING)
     @Column(length = 32, nullable = false)
     private Status status;

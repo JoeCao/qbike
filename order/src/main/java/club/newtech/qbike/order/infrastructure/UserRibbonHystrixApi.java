@@ -29,7 +29,7 @@ public class UserRibbonHystrixApi {
         CustomerVo customerVo = new CustomerVo();
         customerVo.setCustomerId(id);
         customerVo.setCustomerMobile(String.valueOf(ret.get("mobile")));
-        customerVo.setCustomerName(String.valueOf(ret.get("name")));
+        customerVo.setCustomerName(String.valueOf(ret.get("userName")));
         return customerVo;
     }
 
@@ -39,7 +39,7 @@ public class UserRibbonHystrixApi {
         DriverVo driverVo = new DriverVo();
         driverVo.setDriverId(id);
         driverVo.setDriverMobile(String.valueOf(ret.get("mobile")));
-        driverVo.setDriverName(String.valueOf(ret.get("name")));
+        driverVo.setDriverName(String.valueOf(ret.get("userName")));
         return driverVo;
     }
 

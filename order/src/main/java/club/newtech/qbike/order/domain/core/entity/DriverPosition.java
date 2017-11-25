@@ -13,8 +13,8 @@ public class DriverPosition {
     private int dId;
     @Embedded
     private DriverVo driverVo;
-    @Column(length = 64)
-    private String currentPoint;
+    private Double currentLongitude;
+    private Double currentLatitude;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 }

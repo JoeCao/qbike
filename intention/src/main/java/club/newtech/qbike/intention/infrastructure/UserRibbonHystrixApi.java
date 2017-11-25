@@ -29,7 +29,7 @@ public class UserRibbonHystrixApi {
         Customer customerVo = new Customer();
         customerVo.setId(id);
         customerVo.setMobile(String.valueOf(ret.get("mobile")));
-        customerVo.setName(String.valueOf(ret.get("name")));
+        customerVo.setName(String.valueOf(ret.get("userName")));
         customerVo.setType(String.valueOf(ret.get("type")));
         return customerVo;
     }

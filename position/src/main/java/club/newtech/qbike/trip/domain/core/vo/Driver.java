@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 @Data
 public class Driver {
     private int id;
-    private String name;
+    private String userName;
     private String mobile;
     private String type;
 }

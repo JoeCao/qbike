@@ -37,7 +37,7 @@ public class UserRibbonHystrixApi {
         UserRibbonHystrixApi.LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
         Driver driver = new Driver();
         driver.setId(-1);
-        driver.setName("default driver");
+        driver.setUserName("default driver");
         driver.setMobile("0000");
         return driver;
     }

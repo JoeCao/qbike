@@ -29,7 +29,7 @@ public class Receiver {
         LOGGER.info("Received position update " + message);
         try {
             String[] values = message.split("\\|");
-            orderService.handlePosition(Integer.parseInt(values[0]), values[1]);
+            orderService.handlePosition(Integer.parseInt(values[0]), Double.parseDouble(values[1]), Double.parseDouble(values[2]));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -8,16 +8,19 @@ import javax.persistence.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
-@Table(name = "T_USER")
+@Table(name = "tb_poi")
 @Data
-public class User {
+public class Poi {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 64)
-    private String userName;
+    private String linkMan;
+    @Column(length = 64)
+    private String shopName;
     @Column(length = 64, nullable = false)
-    private String mobile;
+    private String cellPhone;
+    private Double longitude;
+    private Double latitude;
     @Column(length = 64)
     private String province;
     @Column(length = 64)
@@ -25,11 +28,9 @@ public class User {
     @Column(length = 64)
     private String district;
     private String street;
+    private String streetNumber;
+    private int shopType;
+    private String userCode;
     private String originAddress;
-
-
-    @Enumerated(value = STRING)
-    @Column(length = 32, nullable = false)
-    private Type type;
 
 }
