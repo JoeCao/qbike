@@ -33,7 +33,7 @@ public class UserRibbonHystrixApi {
         return customerVo;
     }
 
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand(fallbackMethod = "fallbackDriver")
     public DriverVo findDriverById(Integer id) {
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
         DriverVo driverVo = new DriverVo();

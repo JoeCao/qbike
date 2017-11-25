@@ -12,6 +12,6 @@ public class AsyncTaskInitializer {
 
     @PostConstruct
     public void initialize() {
-        orderService.handle();
+        orderService.handleIntention();
     }
 }

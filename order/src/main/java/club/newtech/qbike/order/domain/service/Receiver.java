@@ -26,7 +26,13 @@ public class Receiver {
     }
 
     public void receivePositionUpdate(String message) {
-        LOGGER.info("Received position update "+ message);
+        LOGGER.info("Received position update " + message);
+        try {
+            String[] values = message.split("\\|");
+            orderService.handlePosition(Integer.parseInt(values[0]), values[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
