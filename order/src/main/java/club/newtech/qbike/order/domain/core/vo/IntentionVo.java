@@ -16,13 +16,17 @@ public class IntentionVo implements Delayed {
     private static final long ORIGIN = System.currentTimeMillis();
     private final long time;
     private String customerId;
-    private String startPoint;
-    private String endPoint;
+    private double startLong;
+    private double startLat;
+    private double destLong;
+    private double destLat;
 
-    public IntentionVo(String customerId, String startPoint, String endPoint, long time) {
+    public IntentionVo(String customerId, double sLong, double sLat, double destLong, double destLat, long time) {
         this.customerId = customerId;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+        this.startLong = sLong;
+        this.startLat = sLat;
+        this.destLong = destLong;
+        this.destLat = destLat;
         this.time = time;
     }
 

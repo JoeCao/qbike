@@ -8,7 +8,11 @@ import club.newtech.qbike.order.infrastructure.UserRibbonHystrixApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -42,7 +46,21 @@ public class OrderService {
                 if (intentionVo != null) {
                     LOGGER.info(String.format("get a vo %s", intentionVo));
                     //TODO match intention for trip
-                    //TODO CREATE Order
+                    Circle circle = new Circle(new Point(intentionVo.getStartLong(), intentionVo.getStartLat()), //
+                            new Distance(500, RedisGeoCommands.DistanceUnit.METERS));
+                    GeoResults<RedisGeoCommands.GeoLocation<String>> result =
+                            redisTemplate.opsForGeo().geoRadius("Drivers", circle);
+                    LOGGER.info(result.toString());
+                    if (result.getContent().size() == 0) {
+                        LOGGER.info("没找到匹配, 放入队列重新等待");
+                        IntentionVo newVo = new IntentionVo(intentionVo.getCustomerId(),
+                                intentionVo.getStartLong(), intentionVo.getStartLat(),
+                                intentionVo.getDestLong(), intentionVo.getDestLat(),
+                                2000L);
+                        intentions.put(newVo);
+                    } else {
+                        //TODO CREATE Order
+                    }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

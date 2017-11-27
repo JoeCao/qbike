@@ -1,13 +1,11 @@
 package club.newtech.qbike.intention.controller;
 
+import club.newtech.qbike.intention.controller.bean.MyIntention;
 import club.newtech.qbike.intention.domain.core.vo.Customer;
 import club.newtech.qbike.intention.domain.service.IntentionService;
 import club.newtech.qbike.intention.infrastructure.UserRibbonHystrixApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RibbonHystrixController {
@@ -22,7 +20,10 @@ public class RibbonHystrixController {
     }
 
     @PostMapping("/intentions/place")
-    public void place(String userId, String myPoint, String dest) {
-        intentionService.placeIntention(userId, myPoint, dest);
+    public void place(@RequestBody
+                                  MyIntention myIntention) {
+        intentionService.placeIntention(myIntention.getUserId(),
+                myIntention.getStartLongitude(), myIntention.getStartLatitude(),
+                myIntention.getDestLongitude(), myIntention.getDestLatitude());
     }
 }

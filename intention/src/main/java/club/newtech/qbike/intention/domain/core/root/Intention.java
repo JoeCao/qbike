@@ -18,8 +18,10 @@ public class Intention {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mid;
-    private String startPoint;
-    private String destPoint;
+    private Double startLongitude;
+    private Double startLatitude;
+    private Double destLongitude;
+    private Double destLatitude;
     @Embedded
     private Customer customer;
     @Enumerated(value = STRING)

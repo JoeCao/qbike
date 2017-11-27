@@ -21,15 +21,20 @@ public class IntentionService {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    public void placeIntention(String userId, String myPoint, String destPoint) {
-        Customer customer = userApi.findById(Integer.parseInt(userId));
+    public void placeIntention(int userId, Double startLongitude, Double startLatitude,
+                               Double destLongitude, Double destLatitude) {
+        Customer customer = userApi.findById(userId);
         Intention intention = new Intention()
-                .setDestPoint(destPoint)
-                .setStartPoint(myPoint)
+                .setStartLongitude(startLongitude)
+                .setStartLatitude(startLatitude)
+                .setDestLongitude(destLongitude)
+                .setDestLatitude(destLatitude)
                 .setCustomer(customer)
                 .setStatus(Status.Inited);
         intentionRepository.save(intention);
-        String message = Stream.of(userId, myPoint, destPoint).collect(Collectors.joining("|"));
+        String message = Stream.of(userId,
+                startLongitude, startLatitude,
+                destLongitude, destLatitude).map(String::valueOf).collect(Collectors.joining("|"));
         redisTemplate.convertAndSend("intention", message);
 
     }
