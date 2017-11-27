@@ -14,6 +14,7 @@ import static javax.persistence.EnumType.STRING;
 @ToString
 @Accessors(fluent = false, chain = true)
 @Entity
+@Table(name="t_intention")
 public class Intention {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

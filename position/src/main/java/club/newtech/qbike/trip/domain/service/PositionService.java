@@ -1,7 +1,7 @@
 package club.newtech.qbike.trip.domain.service;
 
 import club.newtech.qbike.trip.domain.core.Status;
-import club.newtech.qbike.trip.domain.core.root.Postion;
+import club.newtech.qbike.trip.domain.core.root.Position;
 import club.newtech.qbike.trip.domain.core.vo.Driver;
 import club.newtech.qbike.trip.domain.repository.PositionRepository;
 import club.newtech.qbike.trip.infrastructure.UserRibbonHystrixApi;
@@ -27,14 +27,14 @@ public class PositionService {
     RedisTemplate<String, String> redisTemplate;
 
     public void updatePosition(Integer driverId, Double longitude, Double latitude) {
-        Postion trip = positionRepository.findByDriver_Id(driverId);
+        Position trip = positionRepository.findByDriver_Id(driverId);
         if (trip != null) {
             trip.setPositionLongitude(longitude);
             trip.setPositionLatitude(latitude);
             positionRepository.save(trip);
         } else {
             Driver driver = userService.findById(driverId);
-            trip = new Postion();
+            trip = new Position();
             trip.setDriver(driver);
             trip.setPositionLongitude(longitude);
             trip.setPositionLatitude(latitude);

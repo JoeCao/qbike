@@ -14,19 +14,18 @@ import java.util.Date;
 @ToString
 @Accessors(fluent = false, chain = true)
 @Entity
-@Table(name="t_qbike_order")
+@Table(name = "t_qbike_order")
 public class Order {
     @Id
-    private int oid;
+    private String oid;
     @Embedded
     private CustomerVo customer;
     @Embedded
     private DriverVo driver;
-    @Column(length = 128)
-    private String startPoint;
-    @Column(length = 128)
-    private String endPoint;
-
+    private Double startLong;
+    private Double startLat;
+    private Double destLong;
+    private Double destLat;
     @Temporal(TemporalType.TIMESTAMP)
     private Date opened;
     @Enumerated(EnumType.STRING)

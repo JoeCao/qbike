@@ -1,10 +1,9 @@
 package club.newtech.qbike.trip.domain.repository;
 
-import club.newtech.qbike.trip.domain.core.root.Postion;
-import org.springframework.data.jpa.repository.Query;
+import club.newtech.qbike.trip.domain.core.root.Position;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PositionRepository extends CrudRepository<Postion, Integer> {
+public interface PositionRepository extends CrudRepository<Position, Integer> {
 //    @Query("select p from Postion p where p.driver.id = :0")
-    Postion findByDriver_Id(Integer driverId);
+    Position findByDriver_Id(Integer driverId);
 }

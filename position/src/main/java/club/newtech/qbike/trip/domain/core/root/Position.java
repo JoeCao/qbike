@@ -14,7 +14,8 @@ import static javax.persistence.EnumType.STRING;
 @ToString
 @Accessors(fluent = false, chain = true)
 @Entity
-public class Postion {
+@Table(name = "t_position")
+public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;
