@@ -31,5 +31,6 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(length = 32, nullable = false)
     private Status orderStatus;
+    private String intentionId;
 
 }

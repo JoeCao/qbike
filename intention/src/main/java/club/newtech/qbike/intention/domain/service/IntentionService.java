@@ -34,7 +34,8 @@ public class IntentionService {
         intentionRepository.save(intention);
         String message = Stream.of(userId,
                 startLongitude, startLatitude,
-                destLongitude, destLatitude).map(String::valueOf).collect(Collectors.joining("|"));
+                destLongitude, destLatitude,
+                intention.getMid()).map(String::valueOf).collect(Collectors.joining("|"));
         redisTemplate.convertAndSend("intention", message);
 
     }

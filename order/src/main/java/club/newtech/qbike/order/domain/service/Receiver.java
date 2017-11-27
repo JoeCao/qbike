@@ -16,13 +16,14 @@ public class Receiver {
         LOGGER.info("Received new intention <" + message + ">");
         try {
             String[] values = message.split("\\|");
-            if (values.length == 5) {
+            if (values.length == 6) {
                 IntentionVo intentionVo =
                         new IntentionVo(values[0],
                                 Double.parseDouble(values[1]),
                                 Double.parseDouble(values[2]),
                                 Double.parseDouble(values[3]),
                                 Double.parseDouble(values[4]),
+                                values[5],
                                 2000L);
 
                 orderService.put(intentionVo);

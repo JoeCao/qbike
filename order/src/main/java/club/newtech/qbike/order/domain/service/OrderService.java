@@ -68,6 +68,7 @@ public class OrderService {
                         IntentionVo newVo = new IntentionVo(intentionVo.getCustomerId(),
                                 intentionVo.getStartLong(), intentionVo.getStartLat(),
                                 intentionVo.getDestLong(), intentionVo.getDestLat(),
+                                intentionVo.getMid(),
                                 2000L);
                         intentions.put(newVo);
                     } else {
@@ -101,6 +102,7 @@ public class OrderService {
         order.setStartLat(intention.getStartLat());
         order.setDestLong(intention.getDestLong());
         order.setDestLat(intention.getDestLat());
+        order.setIntentionId(intention.getMid());
         orderRepository.save(order);
     }
 
