@@ -20,7 +20,7 @@ public class UserRibbonHystrixApi {
      * @param id id
      * @return 通过id查询到的用户
      */
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand
     public Driver findById(Integer id) {
         Driver driver = this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Driver.class);
         driver.setId(id);

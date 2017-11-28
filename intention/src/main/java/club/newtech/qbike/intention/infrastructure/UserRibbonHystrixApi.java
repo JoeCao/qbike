@@ -22,7 +22,7 @@ public class UserRibbonHystrixApi {
      * @param id id
      * @return 通过id查询到的用户
      */
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand
     public Customer findById(Integer id) {
 //        return this.restTemplate.getForObject("http://QBIKE-UC/users/" + id, Customer.class);
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
