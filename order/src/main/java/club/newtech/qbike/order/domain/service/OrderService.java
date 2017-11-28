@@ -1,12 +1,10 @@
 package club.newtech.qbike.order.domain.service;
 
-import club.newtech.qbike.order.domain.core.entity.DriverPosition;
 import club.newtech.qbike.order.domain.core.root.Order;
 import club.newtech.qbike.order.domain.core.vo.CustomerVo;
 import club.newtech.qbike.order.domain.core.vo.DriverVo;
 import club.newtech.qbike.order.domain.core.vo.IntentionVo;
 import club.newtech.qbike.order.domain.core.vo.Status;
-import club.newtech.qbike.order.domain.repository.DriverPositionRepository;
 import club.newtech.qbike.order.domain.repository.OrderRepository;
 import club.newtech.qbike.order.infrastructure.UserRibbonHystrixApi;
 import org.slf4j.Logger;
@@ -34,8 +32,6 @@ public class OrderService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     private DelayQueue<IntentionVo> intentions = new DelayQueue<>();
-    @Autowired
-    private DriverPositionRepository driverPositionRepository;
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
@@ -108,21 +104,8 @@ public class OrderService {
 
     @Transactional
     public void handlePosition(int driverId, double longitude, double latitude) {
-
         LOGGER.info("start handling position update");
-        DriverVo driver = userService.findDriverById(driverId);
-        if (driver != null) {
-            DriverPosition dp = new DriverPosition();
-            dp.setDriverVo(driver);
-            dp.setCurrentLongitude(longitude);
-            dp.setCurrentLatitude(latitude);
-            dp.setDId(driverId);
-            dp.setUpdateTime(new Date());
-            driverPositionRepository.save(dp);
-
-            redisTemplate.opsForGeo().geoAdd("Drivers", new Point(longitude, latitude), String.valueOf(driverId));
-        }
-
+        redisTemplate.opsForGeo().geoAdd("Drivers", new Point(longitude, latitude), String.valueOf(driverId));
     }
 
 }

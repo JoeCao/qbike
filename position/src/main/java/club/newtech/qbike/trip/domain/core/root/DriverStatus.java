@@ -3,28 +3,25 @@ package club.newtech.qbike.trip.domain.core.root;
 import club.newtech.qbike.trip.domain.core.Status;
 import club.newtech.qbike.trip.domain.core.vo.Driver;
 import lombok.Data;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Date;
 
 import static javax.persistence.EnumType.STRING;
 
 @Data
-@ToString
-@Accessors(fluent = false, chain = true)
 @Entity
-@Table(name = "t_position")
-public class Position {
+@Table(name = "t_driver_status")
+public class DriverStatus {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tid;
-    private Double positionLongitude;
-    private Double positionLatitude;
+    private int dId;
+    @Embedded
+    private Driver driver;
+    private Double currentLongitude;
+    private Double currentLatitude;
     @Enumerated(value = STRING)
     @Column(length = 32, nullable = false)
     private Status status;
-    @Embedded
-    private Driver driver;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
 }
