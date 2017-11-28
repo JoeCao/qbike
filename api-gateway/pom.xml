@@ -46,7 +46,7 @@
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <baseImage>java</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "--spring.profiles.active=docker"]]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
