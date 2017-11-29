@@ -2,8 +2,8 @@ package club.newtech.qbike.trip.domain.service;
 
 import club.newtech.qbike.trip.domain.core.Status;
 import club.newtech.qbike.trip.domain.core.root.DriverStatus;
-import club.newtech.qbike.trip.domain.core.vo.Position;
 import club.newtech.qbike.trip.domain.core.vo.Driver;
+import club.newtech.qbike.trip.domain.core.vo.Position;
 import club.newtech.qbike.trip.domain.repository.DriverStatusRepo;
 import club.newtech.qbike.trip.domain.repository.PositionRepository;
 import club.newtech.qbike.trip.infrastructure.UserRibbonHystrixApi;
@@ -43,7 +43,7 @@ public class PositionService {
         position.setUploadTime(current);
         positionRepository.save(position);
         //更新状态表
-        DriverStatus driverStatus = driverStatusRepo.findByDriver_Id(driverId);
+        DriverStatus driverStatus = driverStatusRepo.findOne(driverId);
         if (driverStatus != null) {
             driverStatus.setCurrentLongitude(longitude);
             driverStatus.setCurrentLatitude(latitude);
