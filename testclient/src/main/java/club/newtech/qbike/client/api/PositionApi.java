@@ -9,7 +9,11 @@ public class PositionApi {
     @Autowired
     RestTemplate restTemplate;
 
-    public void positionUpdate() {
-
+    public void positionUpdate(String driverId, String longitude, String latitude) {
+        String url = String.format(
+                "http://localhost:8050/qbike-trip/trips/updatePosition?driverId=%s&longitude=%s&latitude=%s",
+                driverId, longitude, latitude);
+        restTemplate.getForObject(
+                url, Object.class);
     }
 }
