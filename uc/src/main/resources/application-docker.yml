@@ -1,29 +1,22 @@
 server:
-  port: 8003
+  port: 8000
 spring:
   application:
-    name: qbike-trip    # 项目名称尽量用小写
+    name: qbike-uc    # 项目名称尽量用小写
   jpa:
     generate-ddl: false
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/qbike
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_SCHEMA}
     username: root
     password:
     tomcat:
-      max-active: 3
+      max-active: 5
       min-idle: 1
-  redis:
-    host: localhost
-    timeout: 2000
-    database: 2
-    pool:
-      max-active: 20
-      min-idle: 1
-      max-idle: 5
+
 logging:
   level:
     root: INFO
@@ -33,6 +26,6 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/    # 指定注册中心的地址
+      defaultZone: http://${EUREKA_HOST}:8761/eureka/    # 指定注册中心的地址
   instance:
     preferIpAddress: true
