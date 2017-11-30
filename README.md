@@ -9,13 +9,13 @@
 你们决定设计一个电动车的打车平台，能够在早晚高峰时匹配电动车司机和有需要的乘客。
 
 ### Quick Start
-启动docker daemon进程
-mvn clean install
-docker-compose up mysql
-ctrl-c退出
-docker-compose up
+启动docker daemon进程  
+mvn clean install  
+docker-compose up mysql  
+ctrl-c退出  
+docker-compose up  
 
-http://localhost:8050  
+http://localhost:8050    
 
 ### 业务场景
 
