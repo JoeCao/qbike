@@ -10,9 +10,9 @@ spring:
       ddl-auto: validate
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:3306/${DB_SCHEMA}
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_SCHEMA}?useUnicode=true&characterEncoding=utf8
     username: root
-    password:
+    password: root
     tomcat:
       max-active: 3
       min-idle: 1

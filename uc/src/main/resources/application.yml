@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/qbike
+    url: jdbc:mysql://127.0.0.1:3306/qbike?useUnicode=true&characterEncoding=utf8
     username: root
     password:
     tomcat:

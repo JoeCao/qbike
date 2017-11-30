@@ -1,0 +1,87 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "16379:6379"
+    volumes:
+      - ./data/redisdata:/data
+  mysql:
+    image : mysql
+    ports:
+      - "13306:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+      - ./mysql:/etc/mysql/conf.d
+      - ./data/mysqldata:/var/lib/mysql
+  eureka:
+    image: club.newtech/microservice-discovery-eureka
+    ports:
+      - "8761:8761"
+  uc:
+    image: club.newtech/uc
+    ports:
+      - "8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+      - DB_HOST=mysql
+      - DB_SCHEMA=qbike
+      - EUREKA_HOST=eureka
+    links:
+      - eureka
+      - mysql
+  intention:
+    image: club.newtech/intention
+    ports:
+      - "8001"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+      - DB_HOST=mysql
+      - DB_SCHEMA=qbike
+      - EUREKA_HOST=eureka
+    links:
+      - eureka
+      - mysql
+  position:
+    image: club.newtech/position
+    ports:
+      - "8003"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+      - DB_HOST=mysql
+      - DB_SCHEMA=qbike
+      - EUREKA_HOST=eureka
+    links:
+      - eureka
+      - mysql
+  order:
+    image: club.newtech/order
+    ports:
+      - "8002"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+      - DB_HOST=mysql
+      - DB_SCHEMA=qbike
+      - EUREKA_HOST=eureka
+    links:
+      - eureka
+      - mysql
+  api-gateway:
+    image: club.newtech/api-gateway
+    ports:
+      - "8050:8050"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+      - DB_HOST=mysql
+      - DB_SCHEMA=qbike
+      - EUREKA_HOST=eureka
+    links:
+      - eureka
