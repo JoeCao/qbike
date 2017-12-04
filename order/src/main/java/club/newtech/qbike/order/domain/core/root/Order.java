@@ -32,5 +32,4 @@ public class Order {
     @Column(length = 32, nullable = false)
     private Status orderStatus;
     private String intentionId;
-
 }

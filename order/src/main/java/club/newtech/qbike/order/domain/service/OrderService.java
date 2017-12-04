@@ -1,10 +1,11 @@
 package club.newtech.qbike.order.domain.service;
 
+import club.newtech.qbike.order.domain.core.entity.Candidate;
 import club.newtech.qbike.order.domain.core.root.Order;
 import club.newtech.qbike.order.domain.core.vo.CustomerVo;
-import club.newtech.qbike.order.domain.core.vo.DriverVo;
 import club.newtech.qbike.order.domain.core.vo.IntentionVo;
 import club.newtech.qbike.order.domain.core.vo.Status;
+import club.newtech.qbike.order.domain.repository.CanidateRepository;
 import club.newtech.qbike.order.domain.repository.OrderRepository;
 import club.newtech.qbike.order.infrastructure.UserRibbonHystrixApi;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.DelayQueue;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,8 @@ public class OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private SequenceFactory sequenceFactory;
+    @Autowired
+    private CanidateRepository canidateRepository;
 
     private String generateOrderId() {
         return "T" + String.format("%010d", sequenceFactory.generate("order"));
@@ -68,30 +72,44 @@ public class OrderService {
                                 2000L);
                         intentions.put(newVo);
                     } else {
-                        LOGGER.info("获取附近司机为{} 目前的策略为取首位",
-                                result.getContent().stream()
-                                        .map(x -> x.getContent().getName())
-                                        .collect(Collectors.joining(",")));
-                        String driverId = result.getContent().get(0).getContent().getName();
-                        LOGGER.info("{} 匹配到的司机ID为 {}", intentionVo.getCustomerId(), driverId);
-                        createOrder(intentionVo, driverId);
+                        List<String> drivers = result.getContent()
+                                .stream()
+                                .map(x -> x.getContent().getName())
+                                .collect(Collectors.toList());
+                        LOGGER.info("获取附近司机为{} 将发送给司机确认",
+                                drivers);
+                        Order order = createOrder(intentionVo);
+
+                        LOGGER.info("{} 创建的OrderId为 {}", intentionVo.getCustomerId(), order.getOid());
+                        drivers.forEach(driverId -> createCandidate(order, driverId));
                     }
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 LOGGER.error("Error happended", e);
             }
         }
     }
 
     @Transactional
-    protected void createOrder(IntentionVo intention, String driverId) {
+    protected Candidate createCandidate(Order order, String driverId) {
+        Candidate candidate = new Candidate();
+        candidate.setCandidateDriverId(driverId);
+        candidate.setUpdated(new Date());
+        canidateRepository.save(candidate);
+        return candidate;
+
+    }
+
+
+    @Transactional
+    protected Order createOrder(IntentionVo intention) {
         //在调用远程user服务获取用户信息的时候，必须有熔断，否则在事务中很危险
         Order order = new Order();
         order.setOid(generateOrderId());
         CustomerVo customerVo = userService.findCustomerById(Integer.parseInt(intention.getCustomerId()));
-        DriverVo driverVo = userService.findDriverById(Integer.parseInt(driverId));
+//        DriverVo driverVo = userService.findDriverById(Integer.parseInt(driverId));
         order.setCustomer(customerVo);
-        order.setDriver(driverVo);
+//        order.setDriver(driverVo);
         order.setOrderStatus(Status.OPENED);
         order.setOpened(new Date());
         order.setStartLong(intention.getStartLong());
@@ -100,12 +118,18 @@ public class OrderService {
         order.setDestLat(intention.getDestLat());
         order.setIntentionId(intention.getMid());
         orderRepository.save(order);
+        return order;
     }
 
     @Transactional
     public void handlePosition(int driverId, double longitude, double latitude) {
         LOGGER.info("start handling position update");
         redisTemplate.opsForGeo().geoAdd("Drivers", new Point(longitude, latitude), String.valueOf(driverId));
+    }
+
+    @Transactional
+    public void handleCandidate(int driverId, String orderId) {
+
     }
 
 }
