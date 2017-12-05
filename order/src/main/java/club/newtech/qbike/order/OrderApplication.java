@@ -2,6 +2,7 @@ package club.newtech.qbike.order;
 
 import club.newtech.qbike.order.domain.service.OrderService;
 import club.newtech.qbike.order.domain.service.Receiver;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -43,9 +44,15 @@ public class OrderApplication {
     MessageListenerAdapter positionListener(Receiver receiver) {
         return new MessageListenerAdapter(receiver, "receivePositionUpdate");
     }
+
     @Bean
-    Receiver receiver(OrderService service) {
-        return new Receiver(service);
+    Receiver receiver(OrderService service, ObjectMapper objectMapper) {
+        return new Receiver(service, objectMapper);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     /**

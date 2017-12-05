@@ -1,5 +1,6 @@
 package club.newtech.qbike.intention.domain.service;
 
+import club.newtech.qbike.intention.controller.bean.IntentionVo;
 import club.newtech.qbike.intention.domain.core.root.Intention;
 import club.newtech.qbike.intention.domain.core.vo.*;
 import club.newtech.qbike.intention.domain.exception.LockException;
@@ -7,9 +8,12 @@ import club.newtech.qbike.intention.domain.repository.CandidateRepository;
 import club.newtech.qbike.intention.domain.repository.IntentionRepository;
 import club.newtech.qbike.intention.infrastructure.PositionApi;
 import club.newtech.qbike.intention.infrastructure.UserRibbonHystrixApi;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -38,6 +42,9 @@ public class IntentionService {
     CandidateRepository candidateRepository;
     @Autowired
     LockService lockService;
+    @Autowired
+    ObjectMapper objectMapper;
+
 
     private DelayQueue<IntentionTask> intentions = new DelayQueue<>();
 
@@ -91,6 +98,18 @@ public class IntentionService {
             LOGGER.info("{}司机抢单{}结果为{}", driverId, intentionId, ret);
             if (ret == 0) {
                 intentionRepository.save(intention);
+                IntentionVo intentionVo = new IntentionVo().setIntentionId(intention.getMid())
+                        .setCustomerId(intention.getCustomer().getCustomerId())
+                        .setDestLat(intention.getDestLatitude())
+                        .setDestLong(intention.getDestLongitude())
+                        .setStartLong(intention.getStartLongitude())
+                        .setStartLat(intention.getStartLatitude())
+                        .setDriverId(intention.getSelectedDriver().getId());
+                try {
+                    redisTemplate.convertAndSend("intention", objectMapper.writeValueAsString(intentionVo));
+                } catch (JsonProcessingException e) {
+                    LOGGER.error("convert message fail" + intentionVo, e);
+                }
                 return true;
             } else {
                 return false;

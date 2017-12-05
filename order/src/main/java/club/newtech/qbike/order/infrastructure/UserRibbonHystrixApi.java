@@ -23,22 +23,22 @@ public class UserRibbonHystrixApi {
      * @param id customerId
      * @return 通过id查询到的用户
      */
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand()
     public CustomerVo findCustomerById(Integer id) {
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
         CustomerVo customerVo = new CustomerVo();
         customerVo.setCustomerId(id);
-        customerVo.setCustomerMobile(String.valueOf(ret.get("customerMobile")));
+        customerVo.setCustomerMobile(String.valueOf(ret.get("mobile")));
         customerVo.setCustomerName(String.valueOf(ret.get("userName")));
         return customerVo;
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackDriver")
+    @HystrixCommand()
     public DriverVo findDriverById(Integer id) {
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
         DriverVo driverVo = new DriverVo();
         driverVo.setDriverId(id);
-        driverVo.setDriverMobile(String.valueOf(ret.get("customerMobile")));
+        driverVo.setDriverMobile(String.valueOf(ret.get("mobile")));
         driverVo.setDriverName(String.valueOf(ret.get("userName")));
         return driverVo;
     }
