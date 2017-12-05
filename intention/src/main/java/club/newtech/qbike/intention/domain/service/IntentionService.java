@@ -129,7 +129,7 @@ public class IntentionService {
                             sendNotification(result, intention);
                         } else {
                             LOGGER.info("没有匹配到司机，放入队列继续等待");
-                            if (retryMatch(task, intention)) return;
+                            retryMatch(task, intention);
                         }
                     } else {
                         // 忽略

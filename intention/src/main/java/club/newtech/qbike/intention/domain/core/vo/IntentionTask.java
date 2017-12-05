@@ -16,7 +16,7 @@ public class IntentionTask implements Delayed {
     /**
      * Base of nanosecond timings, to avoid wrapping
      */
-    private static final long NANO_ORIGIN = System.nanoTime();
+    private final long NANO_ORIGIN = System.nanoTime();
     private final long executionTime;
     private int intenionId;
     private int repeatTimes;
@@ -28,7 +28,7 @@ public class IntentionTask implements Delayed {
     }
 
 
-    final static long now() {
+    final long now() {
         return System.nanoTime() - NANO_ORIGIN;
     }
 
