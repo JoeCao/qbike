@@ -39,15 +39,6 @@ CREATE TABLE `t_driver_status` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_driver_status`
---
-
-LOCK TABLES `t_driver_status` WRITE;
-/*!40000 ALTER TABLE `t_driver_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_driver_status` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_intention`
 --
 
@@ -56,27 +47,45 @@ DROP TABLE IF EXISTS `t_intention`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_intention` (
   `mid` int(11) NOT NULL AUTO_INCREMENT,
-  `id` int(11) NOT NULL,
-  `mobile` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer_mobile` varchar(255) DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `user_type` varchar(255) DEFAULT NULL,
   `dest_latitude` double DEFAULT NULL,
   `dest_longitude` double DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `user_name` varchar(255) DEFAULT NULL,
   `start_latitude` double DEFAULT NULL,
   `start_longitude` double DEFAULT NULL,
   `status` varchar(32) NOT NULL,
+  `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`mid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_intention`
+-- Table structure for table `t_intention_candidate`
 --
 
-LOCK TABLES `t_intention` WRITE;
-/*!40000 ALTER TABLE `t_intention` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_intention` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `t_intention_candidate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_intention_candidate` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  `driver_id` int(11) NOT NULL,
+  `driver_mobile` varchar(255) DEFAULT NULL,
+  `driver_name` varchar(255) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `intention_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cid`),
+  KEY `FK5tqiarjxu0kloid0n8ixpn6xf` (`intention_id`),
+  CONSTRAINT `FK5tqiarjxu0kloid0n8ixpn6xf` FOREIGN KEY (`intention_id`) REFERENCES `t_intention` (`mid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `t_position`
@@ -93,17 +102,8 @@ CREATE TABLE `t_position` (
   `status` varchar(32) NOT NULL,
   `upload_time` datetime DEFAULT NULL,
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_position`
---
-
-LOCK TABLES `t_position` WRITE;
-/*!40000 ALTER TABLE `t_position` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_position` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_qbike_order`
@@ -130,37 +130,6 @@ CREATE TABLE `t_qbike_order` (
   PRIMARY KEY (`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_qbike_order`
---
-
-LOCK TABLES `t_qbike_order` WRITE;
-/*!40000 ALTER TABLE `t_qbike_order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_qbike_order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_user`
---
-
-DROP TABLE IF EXISTS `t_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` varchar(64) DEFAULT NULL,
-  `district` varchar(64) DEFAULT NULL,
-  `mobile` varchar(64) NOT NULL,
-  `origin_address` varchar(255) DEFAULT NULL,
-  `province` varchar(64) DEFAULT NULL,
-  `street` varchar(255) DEFAULT NULL,
-  `type` varchar(32) NOT NULL,
-  `user_name` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1272 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `t_user`
 --
