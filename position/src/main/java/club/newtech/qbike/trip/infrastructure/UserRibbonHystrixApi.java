@@ -17,7 +17,7 @@ public class UserRibbonHystrixApi {
     /**
      * 使用@HystrixCommand注解指定当该方法发生异常时调用的方法
      *
-     * @param id id
+     * @param id customerId
      * @return 通过id查询到的用户
      */
     @HystrixCommand
@@ -30,11 +30,11 @@ public class UserRibbonHystrixApi {
     /**
      * hystrix fallback方法
      *
-     * @param id id
+     * @param id customerId
      * @return 默认的用户
      */
     public Driver fallback(Integer id) {
-        UserRibbonHystrixApi.LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
+        UserRibbonHystrixApi.LOGGER.info("异常发生，进入fallback方法，接收的参数：customerId = {}", id);
         Driver driver = new Driver();
         driver.setId(-1);
         driver.setUserName("default driver");

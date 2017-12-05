@@ -16,12 +16,12 @@ public interface LockService {
     Iterable<Lock> findAll();
 
     /**
-     * Acquire a lock by name. Only one process (globally) should be able to obtain and
-     * hold the lock with this name at any given time. Locks expire and can also be
+     * Acquire a lock by customerName. Only one process (globally) should be able to obtain and
+     * hold the lock with this customerName at any given time. Locks expire and can also be
      * released by the owner, so after either of those events the lock can be acquired by
      * the same or a different process.
      *
-     * @param name the name identifying the lock
+     * @param name the customerName identifying the lock
      * @return a Lock containing a value that can be used to release or refresh the lock
      * @throws LockExistsException
      */
@@ -33,7 +33,7 @@ public interface LockService {
      * Release a lock before it expires. Only the holder of a lock can release it, and the
      * holder must have the correct unique value to prove that he holds it.
      *
-     * @param name  the name of the lock
+     * @param name  the customerName of the lock
      * @param value the value of the lock (which has to match the value when it was
      *              acquired)
      * @return true if successful
@@ -48,7 +48,7 @@ public interface LockService {
      * tell if it was because he formerly held the lock and it expired, or if it simply
      * was never held.
      *
-     * @param name  the name of the lock
+     * @param name  the customerName of the lock
      * @param value the value of the lock (which has to match the value when it was
      *              acquired)
      * @return a new lock with a new value and a new expiry

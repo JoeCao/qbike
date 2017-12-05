@@ -14,12 +14,12 @@ import java.util.Date;
 @ToString
 public class Lock implements Comparable<Lock> {
     /**
-     * The name of the lock.
+     * The customerName of the lock.
      */
     private final String name;
     /**
      * The value of the lock (globally unique, or at least different for locks with the
-     * same name and different expiry).
+     * same customerName and different expiry).
      */
     private final String value;
     /**

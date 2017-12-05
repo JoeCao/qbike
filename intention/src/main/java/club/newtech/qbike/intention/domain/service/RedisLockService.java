@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toMap;
 
 @Service
 public class RedisLockService implements LockService {
-    private static final String DEFAULT_LOCK_PREFIX = "ledger.lock.";
+    private static final String DEFAULT_LOCK_PREFIX = "qbike.lock.";
     @Autowired
     StringRedisTemplate redisOperations;
     private String prefix = DEFAULT_LOCK_PREFIX;

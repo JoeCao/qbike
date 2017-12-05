@@ -20,7 +20,7 @@ public class UserRibbonHystrixApi {
     /**
      * 使用@HystrixCommand注解指定当该方法发生异常时调用的方法
      *
-     * @param id id
+     * @param id customerId
      * @return 通过id查询到的用户
      */
     @HystrixCommand(fallbackMethod = "fallback")
@@ -28,7 +28,7 @@ public class UserRibbonHystrixApi {
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
         CustomerVo customerVo = new CustomerVo();
         customerVo.setCustomerId(id);
-        customerVo.setCustomerMobile(String.valueOf(ret.get("mobile")));
+        customerVo.setCustomerMobile(String.valueOf(ret.get("customerMobile")));
         customerVo.setCustomerName(String.valueOf(ret.get("userName")));
         return customerVo;
     }
@@ -38,7 +38,7 @@ public class UserRibbonHystrixApi {
         Map ret = restTemplate.getForObject("http://QBIKE-UC/users/" + id, Map.class);
         DriverVo driverVo = new DriverVo();
         driverVo.setDriverId(id);
-        driverVo.setDriverMobile(String.valueOf(ret.get("mobile")));
+        driverVo.setDriverMobile(String.valueOf(ret.get("customerMobile")));
         driverVo.setDriverName(String.valueOf(ret.get("userName")));
         return driverVo;
     }
@@ -46,11 +46,11 @@ public class UserRibbonHystrixApi {
     /**
      * hystrix fallback方法
      *
-     * @param id id
+     * @param id customerId
      * @return 默认的用户
      */
     public CustomerVo fallback(Integer id) {
-        LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
+        LOGGER.info("异常发生，进入fallback方法，接收的参数：customerId = {}", id);
         CustomerVo customer = new CustomerVo();
         customer.setCustomerId(-1);
         customer.setCustomerName("default username");
@@ -59,7 +59,7 @@ public class UserRibbonHystrixApi {
     }
 
     public DriverVo fallbackDriver(Integer id) {
-        LOGGER.info("异常发生，进入fallback方法，接收的参数：id = {}", id);
+        LOGGER.info("异常发生，进入fallback方法，接收的参数：customerId = {}", id);
         DriverVo driverVo = new DriverVo();
         driverVo.setDriverId(-1);
         driverVo.setDriverName("default");

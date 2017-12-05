@@ -29,7 +29,7 @@
 
 [mysqld]
 #skip-host-cache
-#skip-name-resolve
+#skip-customerName-resolve
 #user		= mysql
 #pid-file	= /var/run/mysqld/mysqld.pid
 #socket		= /var/run/mysqld/mysqld.sock

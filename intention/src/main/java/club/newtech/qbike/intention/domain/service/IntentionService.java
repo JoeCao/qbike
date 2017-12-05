@@ -1,11 +1,8 @@
 package club.newtech.qbike.intention.domain.service;
 
-import club.newtech.qbike.intention.domain.Status;
 import club.newtech.qbike.intention.domain.core.root.Intention;
-import club.newtech.qbike.intention.domain.core.vo.Candidate;
-import club.newtech.qbike.intention.domain.core.vo.Customer;
-import club.newtech.qbike.intention.domain.core.vo.DriverStatusVo;
-import club.newtech.qbike.intention.domain.core.vo.IntentionTask;
+import club.newtech.qbike.intention.domain.core.vo.*;
+import club.newtech.qbike.intention.domain.exception.LockException;
 import club.newtech.qbike.intention.domain.repository.CandidateRepository;
 import club.newtech.qbike.intention.domain.repository.IntentionRepository;
 import club.newtech.qbike.intention.infrastructure.PositionApi;
@@ -22,6 +19,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.DelayQueue;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.stream.Collectors.toList;
 
@@ -38,6 +36,8 @@ public class IntentionService {
     PositionApi positionApi;
     @Autowired
     CandidateRepository candidateRepository;
+    @Autowired
+    LockService lockService;
 
     private DelayQueue<IntentionTask> intentions = new DelayQueue<>();
 
@@ -65,7 +65,7 @@ public class IntentionService {
                 .setCustomer(customer)
                 .setStatus(Status.Inited);
         intentionRepository.save(intention);
-        IntentionTask task = new IntentionTask(intention.getMid(), 2000L);
+        IntentionTask task = new IntentionTask(intention.getMid(), 2L, TimeUnit.SECONDS, 0);
 
         intentions.put(task);
     }
@@ -75,7 +75,39 @@ public class IntentionService {
         result.stream()
                 .map(vo -> fromDriverStatus(vo, intention))
                 .forEach(candidate -> candidateRepository.save(candidate));
-        intention.setStatus(Status.UnConfirmed);
+        intention.waitingConfirm();
+        intentionRepository.save(intention);
+    }
+
+    @Transactional
+    public boolean confirmIntention(int driverId, int intentionId) {
+        String lockName = "intention" + intentionId;
+        Lock lock = null;
+        try {
+            lock = lockService.create(lockName);
+            Intention intention = intentionRepository.findOne(intentionId);
+            DriverVo driverVo = userApi.findDriverById(driverId);
+            int ret = intention.confirmIntention(driverVo);
+            LOGGER.info("{}司机抢单{}结果为{}", driverId, intentionId, ret);
+            if (ret == 0) {
+                intentionRepository.save(intention);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (LockException e) {
+            LOGGER.error("try lock error ", e);
+            return false;
+        } finally {
+            if (lock != null) {
+                lockService.release(lockName, lock.getValue());
+            }
+        }
+    }
+
+    @Transactional
+    public void matchFail(Intention intention) {
+        intention.fail();
         intentionRepository.save(intention);
     }
 
@@ -97,8 +129,7 @@ public class IntentionService {
                             sendNotification(result, intention);
                         } else {
                             LOGGER.info("没有匹配到司机，放入队列继续等待");
-                            IntentionTask newTask = new IntentionTask(intention.getMid(), 2000L);
-                            this.intentions.put(newTask);
+                            if (retryMatch(task, intention)) return;
                         }
                     } else {
                         // 忽略
@@ -109,5 +140,18 @@ public class IntentionService {
                 LOGGER.error("error happened", e);
             }
         }
+    }
+
+    private boolean retryMatch(IntentionTask task, Intention intention) {
+        int times = task.getRepeatTimes() + 1;
+        LOGGER.info("task 已经被循环{} 次", times);
+        if (times > 5) {
+            //超过n次匹配无法匹配，就失败
+            matchFail(intention);
+            return true;
+        }
+        IntentionTask newTask = new IntentionTask(intention.getMid(), 2 * times, TimeUnit.SECONDS, times);
+        this.intentions.put(newTask);
+        return false;
     }
 }

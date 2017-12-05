@@ -17,4 +17,4 @@ zuul:
 #  routes:
 #    movie:                                                            # 可以随便写，在zuul上面唯一即可；当这里的值 = service-id时，service-id可以不写。
 #      path: /movie/**                                                 # 想要映射到的路径
-#      service-id: microservice-consumer-movie-ribbon-with-hystrix     # Eureka中的serviceId
+#      service-customerId: microservice-consumer-movie-ribbon-with-hystrix     # Eureka中的serviceId

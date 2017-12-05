@@ -37,4 +37,9 @@ public class RibbonHystrixController {
                 myIntention.getStartLongitude(), myIntention.getStartLatitude(),
                 myIntention.getDestLongitude(), myIntention.getDestLatitude());
     }
+
+    @PostMapping("/intention/confirm")
+    public boolean confirm(int driverId, int intentionId) {
+        return intentionService.confirmIntention(driverId, intentionId);
+    }
 }
