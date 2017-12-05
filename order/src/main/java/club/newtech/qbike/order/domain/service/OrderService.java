@@ -1,11 +1,9 @@
 package club.newtech.qbike.order.domain.service;
 
-import club.newtech.qbike.order.domain.core.entity.Candidate;
 import club.newtech.qbike.order.domain.core.root.Order;
 import club.newtech.qbike.order.domain.core.vo.CustomerVo;
 import club.newtech.qbike.order.domain.core.vo.IntentionVo;
 import club.newtech.qbike.order.domain.core.vo.Status;
-import club.newtech.qbike.order.domain.repository.CanidateRepository;
 import club.newtech.qbike.order.domain.repository.OrderRepository;
 import club.newtech.qbike.order.infrastructure.UserRibbonHystrixApi;
 import org.slf4j.Logger;
@@ -38,8 +36,6 @@ public class OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private SequenceFactory sequenceFactory;
-    @Autowired
-    private CanidateRepository canidateRepository;
 
     private String generateOrderId() {
         return "T" + String.format("%010d", sequenceFactory.generate("order"));
@@ -81,23 +77,13 @@ public class OrderService {
                         Order order = createOrder(intentionVo);
 
                         LOGGER.info("{} 创建的OrderId为 {}", intentionVo.getCustomerId(), order.getOid());
-                        drivers.forEach(driverId -> createCandidate(order, driverId));
+
                     }
                 }
             } catch (Exception e) {
                 LOGGER.error("Error happended", e);
             }
         }
-    }
-
-    @Transactional
-    protected Candidate createCandidate(Order order, String driverId) {
-        Candidate candidate = new Candidate();
-        candidate.setCandidateDriverId(driverId);
-        candidate.setUpdated(new Date());
-        canidateRepository.save(candidate);
-        return candidate;
-
     }
 
 

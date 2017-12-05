@@ -1,12 +1,15 @@
 package club.newtech.qbike.intention.domain.core.root;
 
 import club.newtech.qbike.intention.domain.Status;
+import club.newtech.qbike.intention.domain.core.vo.Candidate;
 import club.newtech.qbike.intention.domain.core.vo.Customer;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -28,6 +31,9 @@ public class Intention {
     @Enumerated(value = STRING)
     @Column(length = 32, nullable = false)
     private Status status;
+
+    @OneToMany(mappedBy = "intention", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Candidate> candidates = new ArrayList<>();
 
     public boolean canMatchDriver() {
         if (status.equals(Status.Inited)) {
