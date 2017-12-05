@@ -1,4 +1,4 @@
-package club.newtech.qbike;
+package club.newtech.qbike.intention;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
