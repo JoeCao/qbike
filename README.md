@@ -29,3 +29,46 @@ http://localhost:8050
 - 乘客行程途中要求改变行程
 - 系统计费及完成订单
 - 乘客对司机的评价
+
+
+
+![主要场景.005](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014433.jpg)
+
+
+### 业务流程
+
+![业务流程.006](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014431.jpg)
+
+### 事件
+
+![事件.008](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014427.jpg)
+
+
+
+### 命令
+
+![滴滴电动车需求.009](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014429.jpg)
+
+
+
+### 聚合识别
+
+![滴滴电动车需求.010](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014428.jpg)
+
+
+
+![滴滴电动车需求.011](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014430.jpg)
+
+
+
+### 系统架构
+
+
+
+![滴滴电动车需求.012](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014432.jpg)
+
+
+
+
+
+
