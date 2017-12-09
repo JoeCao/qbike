@@ -133,6 +133,21 @@ CREATE TABLE `t_qbike_order` (
 --
 -- Dumping data for table `t_user`
 --
+DROP TABLE IF EXISTS `t_user`;
+
+CREATE TABLE `t_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(64) DEFAULT NULL,
+  `district` varchar(64) DEFAULT NULL,
+  `mobile` varchar(64) NOT NULL,
+  `origin_address` varchar(255) DEFAULT NULL,
+  `province` varchar(64) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `type` varchar(32) NOT NULL,
+  `user_name` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1272 DEFAULT CHARSET=utf8;
+
 
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
