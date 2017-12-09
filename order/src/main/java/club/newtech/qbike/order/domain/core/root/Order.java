@@ -2,7 +2,6 @@ package club.newtech.qbike.order.domain.core.root;
 
 import club.newtech.qbike.order.domain.core.vo.CustomerVo;
 import club.newtech.qbike.order.domain.core.vo.DriverVo;
-import club.newtech.qbike.order.domain.core.vo.Status;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -28,8 +27,7 @@ public class Order {
     private Double destLat;
     @Temporal(TemporalType.TIMESTAMP)
     private Date opened;
-    @Enumerated(EnumType.STRING)
     @Column(length = 32, nullable = false)
-    private Status orderStatus;
+    private String orderStatus;
     private String intentionId;
 }

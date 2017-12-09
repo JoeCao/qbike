@@ -1,4 +1,4 @@
-package club.newtech.qbike.order.domain.service;
+package club.newtech.qbike.order.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

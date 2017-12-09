@@ -72,6 +72,16 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>1.5.10</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.statemachine</groupId>
+                <artifactId>spring-statemachine-core</artifactId>
+                <version>1.2.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.5</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
