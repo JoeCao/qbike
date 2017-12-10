@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.StateMachineBuilder;
-import org.springframework.statemachine.listener.StateMachineListener;
-import org.springframework.statemachine.listener.StateMachineListenerAdapter;
-import org.springframework.statemachine.transition.Transition;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
@@ -37,20 +34,38 @@ public class OrderStateMachineBuilder {
                 .withStates()
                 .initial(initState)
                 .end(FlowState.CLOSED)
+                .end(FlowState.CANCELED)
                 .states(EnumSet.allOf(FlowState.class));
         builder.configureTransitions()
                 .withExternal()
                 .source(FlowState.WAITING_ABOARD).target(FlowState.WAITING_ARRIVE)
                 .event(Events.ABOARD)
                 .action(aboard(), errorAction)
+                //司机接单后，三分钟内可以无条件取消
+                .and()
+                .withExternal()
+                .source(FlowState.WAITING_ABOARD).target(FlowState.CANCELED)
+                .event(Events.CANCEL)
+                .action(cancel(), errorAction)
+                // 上车后，等待结束
                 .and()
                 .withExternal()
                 .source(FlowState.WAITING_ARRIVE).target(FlowState.UNPAY)
                 .event(Events.ARRIVE)
                 .and()
                 .withExternal()
-                .source(FlowState.UNPAY).target(FlowState.CLOSED)
-                .event(Events.PAY);
+                .source(FlowState.UNPAY).target(FlowState.PAYING)
+                .event(Events.PAY)
+                .and()
+                .withExternal()
+                .source(FlowState.PAYING).target(FlowState.WAITING_COMMENT)
+                .event(Events.PAY_CALLBACK)
+                .and()
+                .withExternal()
+                .source(FlowState.WAITING_COMMENT).target(FlowState.CLOSED)
+                .event(Events.COMMENT);
+
+
         return builder.build();
     }
 
@@ -63,31 +78,13 @@ public class OrderStateMachineBuilder {
         };
     }
 
-
-    public StateMachineListener<FlowState, Events> listener() {
-        return new StateMachineListenerAdapter<FlowState, Events>() {
-            @Override
-            public void transition(Transition<FlowState, Events> transition) {
-                if (transition.getTarget().getId() == FlowState.WAITING_ABOARD) {
-                    LOGGER.info("订单创建，等待用户上车");
-                    return;
-                }
-                if (transition.getSource().getId() == FlowState.WAITING_ABOARD
-                        && transition.getTarget().getId() == FlowState.WAITING_ARRIVE) {
-                    LOGGER.info("用户已上车，等待到达目的地");
-                    return;
-                }
-                if (transition.getSource().getId() == FlowState.WAITING_ARRIVE
-                        && transition.getTarget().getId() == FlowState.UNPAY) {
-                    LOGGER.info("用户已到达，等待支付");
-                    return;
-                }
-                if (transition.getSource().getId() == FlowState.UNPAY
-                        && transition.getTarget().getId() == FlowState.CLOSED) {
-                    LOGGER.info("用户已支付");
-                    return;
-                }
-            }
+    public Action<FlowState, Events> cancel() {
+        return stateContext -> {
+            Order order = stateContext.getExtendedState().get(StateRequest.class, Order.class);
+            String uuId = stateContext.getExtendedState().get(OrderService.UUID_KEY, String.class);
+            order.setOrderStatus(FlowState.CANCELED.toValue());
+            orderService.cancel(order);
         };
     }
+
 }

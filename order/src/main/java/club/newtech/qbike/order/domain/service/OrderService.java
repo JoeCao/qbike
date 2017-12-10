@@ -5,6 +5,7 @@ import club.newtech.qbike.order.domain.core.vo.CustomerVo;
 import club.newtech.qbike.order.domain.core.vo.DriverVo;
 import club.newtech.qbike.order.domain.core.vo.FlowState;
 import club.newtech.qbike.order.domain.core.vo.IntentionVo;
+import club.newtech.qbike.order.domain.exception.OrderRuntimeException;
 import club.newtech.qbike.order.domain.repository.OrderRepository;
 import club.newtech.qbike.order.infrastructure.UserRibbonHystrixApi;
 import club.newtech.qbike.order.util.SequenceFactory;
@@ -61,6 +62,17 @@ public class OrderService {
         order.setOrderStatus(FlowState.WAITING_ARRIVE.toValue());
         order.setOpened(new Date());
         orderRepository.save(order);
+    }
+
+    @Transactional
+    public void cancel(Order order) {
+        Date currentTime = new Date();
+        if ((currentTime.getTime() - order.getOpened().getTime()) <= 3 * 60 * 1000L) {
+            order.setOrderStatus(FlowState.CANCELED.toValue());
+            orderRepository.save(order);
+        } else {
+            throw new OrderRuntimeException("040001");
+        }
     }
 
 

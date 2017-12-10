@@ -27,16 +27,28 @@ public class OrderTest {
 
     @Test
     public void changeState() {
-//        IntentionVo intentionVo = new IntentionVo();
-//        intentionVo.setCustomerId(84);
-//        intentionVo.setDriverId(96);
-//        intentionVo.setIntentionId(1);
-//        intentionVo.setStartLong(118.71334176065);
-//        intentionVo.setStartLat(32.012518207527);
-//        intentionVo.setDestLong(118.81722069709);
-//        intentionVo.setDestLat(32.007969136143);
+
         Order order = orderRepository.findOne("T0000000005");
-//        Order order = orderService.createOrder(intentionVo);
+        StateRequest stateRequest = new StateRequest();
+        stateRequest.setOrderId(order.getOid());
+        stateRequest.setUId(UUID.randomUUID().toString());
+        stateRequest.setUserId(96);
+        stateRequest.setData(order);
+        stateRequest.setEvent(Events.ABOARD);
+        fsmService.changeState(stateRequest);
+
+    }
+    @Test
+    public void createAndChange() {
+        IntentionVo intentionVo = new IntentionVo();
+        intentionVo.setCustomerId(84);
+        intentionVo.setDriverId(96);
+        intentionVo.setIntentionId(1);
+        intentionVo.setStartLong(118.71334176065);
+        intentionVo.setStartLat(32.012518207527);
+        intentionVo.setDestLong(118.81722069709);
+        intentionVo.setDestLat(32.007969136143);
+        Order order = orderService.createOrder(intentionVo);
         StateRequest stateRequest = new StateRequest();
         stateRequest.setOrderId(order.getOid());
         stateRequest.setUId(UUID.randomUUID().toString());
