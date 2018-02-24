@@ -17,6 +17,9 @@ docker-compose up
 
 http://localhost:8050    
 
+### Dev
+请安装Lombok插件，Java8 Stream + Lombok + Spring boot， 你会拥有一个全新的Java开发体验。
+
 ### 业务场景
 
 初步设计的场景比较简单，主要是匹配有需求的乘客附近的电动车司机。经过前期的需求梳理，产出了下列的基本功能
