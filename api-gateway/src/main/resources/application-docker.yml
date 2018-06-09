@@ -1,6 +1,15 @@
 spring:
   application:
     name: microservice-api-gateway
+  rabbitmq:
+    host: ${RABBIT}
+    port: 5672
+    username: guest
+    password: guest
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+
 server:
   port: 8050
 eureka:

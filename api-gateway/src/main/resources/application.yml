@@ -1,6 +1,15 @@
 spring:
   application:
     name: microservice-api-gateway
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+
 server:
   port: 8050
 eureka:
@@ -9,6 +18,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:8761/eureka/
+
 #zuul:
 #  ignored-services: microservice-provider-user                        # 需要忽视的服务(配置后将不会被路由)
 #  routes:

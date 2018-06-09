@@ -16,13 +16,14 @@
         <module>api-gateway</module>
         <module>order</module>
         <module>testclient</module>
+        <module>zipkin-server</module>
     </modules>
 
     <!-- 使用最新的spring-boot版本 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+        <version>1.5.13.RELEASE</version>
     </parent>
 
     <properties>
@@ -31,26 +32,30 @@
         <docker.image.prefix>club.newtech</docker.image.prefix>
         <springfox.version>2.7.0</springfox.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-dependencies</artifactId>
-            <version>Dalston.SR4</version>
+            <version>Edgware.SR3</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
     </dependencies>
 
 
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.SR4</version>
+                <artifactId>spring-cloud-sleuth</artifactId>
+                <version>1.2.6.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-sleuth</artifactId>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>

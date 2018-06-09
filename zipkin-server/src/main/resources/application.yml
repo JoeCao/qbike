@@ -1,0 +1,15 @@
+server:
+  port: 9411
+spring:
+  application:
+    name: zipkin-server
+zipkin:
+  storage:
+    type: mem
+  collector:
+    sample-rate: 1.0
+    rabbitmq:
+      addresses: localhost:5672
+      password: guest
+      username: guest
+      queue: zipkin
