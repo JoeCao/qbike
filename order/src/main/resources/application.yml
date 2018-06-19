@@ -32,6 +32,9 @@ spring:
   zipkin:
     rabbitmq:
       queue: zipkin
+  sleuth:
+    sampler:
+      percentage: 1.0f
 logging:
   level:
     root: INFO

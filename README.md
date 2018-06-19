@@ -10,7 +10,7 @@
 
 ### Quick Start
 启动docker daemon进程  
-mvn clean install  
+mvn clean install -DskipTests=true  
 docker-compose up mysql  
 ctrl-c退出  
 docker-compose up  

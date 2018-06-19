@@ -1,5 +1,18 @@
 version: '3'
 services:
+  rabbit:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672"
+      - "5672"
+    labels:
+      NAME: "rabbitmq"
   redis:
     image: redis:latest
     ports:
@@ -31,9 +44,11 @@ services:
       - DB_HOST=mysql
       - DB_SCHEMA=qbike
       - EUREKA_HOST=eureka
+      - RABBIT=rabbit
     links:
       - eureka
       - mysql
+      - rabbit
   intention:
     image: club.newtech/intention
     ports:
@@ -44,9 +59,11 @@ services:
       - DB_HOST=mysql
       - DB_SCHEMA=qbike
       - EUREKA_HOST=eureka
+      - RABBIT=rabbit
     links:
       - eureka
       - mysql
+      - rabbit
   position:
     image: club.newtech/position
     ports:
@@ -57,9 +74,11 @@ services:
       - DB_HOST=mysql
       - DB_SCHEMA=qbike
       - EUREKA_HOST=eureka
+      - RABBIT=rabbit
     links:
       - eureka
       - mysql
+      - rabbit
   order:
     image: club.newtech/order
     ports:
@@ -70,9 +89,11 @@ services:
       - DB_HOST=mysql
       - DB_SCHEMA=qbike
       - EUREKA_HOST=eureka
+      - RABBIT=rabbit
     links:
       - eureka
       - mysql
+      - rabbit
   api-gateway:
     image: club.newtech/api-gateway
     ports:
@@ -83,5 +104,19 @@ services:
       - DB_HOST=mysql
       - DB_SCHEMA=qbike
       - EUREKA_HOST=eureka
+      - RABBIT=rabbit
     links:
+      - eureka
+      - rabbit
+  zipkin:
+    image: club.newtech/zipkin-server
+    ports:
+      - "9411:9411"
+    environment:
+      - EUREKA_HOST=eureka
+      - RABBIT=rabbit
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
       - eureka

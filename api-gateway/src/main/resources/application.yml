@@ -6,6 +6,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+  sleuth:
+    sampler:
+      percentage: 1.0f
   zipkin:
     rabbitmq:
       queue: zipkin
