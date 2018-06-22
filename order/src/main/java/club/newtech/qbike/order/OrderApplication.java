@@ -22,38 +22,38 @@ public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
     }
+//
+//    @Bean
+//    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
+//                                            MessageListenerAdapter intentionListener,
+//                                            MessageListenerAdapter positionListener) {
+//
+//        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+//        container.setConnectionFactory(connectionFactory);
+//        container.addMessageListener(intentionListener, new PatternTopic("intention"));
+//        container.addMessageListener(positionListener, new PatternTopic("position"));
+//        return container;
+//    }
 
-    @Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                            MessageListenerAdapter intentionListener,
-                                            MessageListenerAdapter positionListener) {
+//    @Bean(name = "intentionListener")
+//    MessageListenerAdapter intentionListener(Receiver receiver) {
+//        return new MessageListenerAdapter(receiver, "receiveMessage");
+//    }
+//
+//    @Bean(name = "positionListener")
+//    MessageListenerAdapter positionListener(Receiver receiver) {
+//        return new MessageListenerAdapter(receiver, "receivePositionUpdate");
+//    }
 
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.addMessageListener(intentionListener, new PatternTopic("intention"));
-        container.addMessageListener(positionListener, new PatternTopic("position"));
-        return container;
-    }
-
-    @Bean(name = "intentionListener")
-    MessageListenerAdapter intentionListener(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
-
-    @Bean(name = "positionListener")
-    MessageListenerAdapter positionListener(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receivePositionUpdate");
-    }
-
-    @Bean
-    Receiver receiver(OrderService service, ObjectMapper objectMapper) {
-        return new Receiver(service, objectMapper);
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+//    @Bean
+//    Receiver receiver(OrderService service, ObjectMapper objectMapper) {
+//        return new Receiver(service, objectMapper);
+//    }
+//
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        return new ObjectMapper();
+//    }
 
     /**
      * 实例化RestTemplate，通过@LoadBalanced注解开启均衡负载能力.

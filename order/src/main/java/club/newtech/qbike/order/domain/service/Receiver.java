@@ -4,17 +4,20 @@ import club.newtech.qbike.order.domain.core.vo.IntentionVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
+@RabbitListener(queues = "intention")
 public class Receiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
-    ObjectMapper mapper;
+    ObjectMapper mapper = new ObjectMapper();
+    @Autowired
     private OrderService orderService;
 
-    public Receiver(OrderService taskService, ObjectMapper mapper) {
-        this.orderService = taskService;
-        this.mapper = mapper;
-    }
-
+    @RabbitHandler
     public void receiveMessage(String message) {
         LOGGER.info("Received new intention <" + message + ">");
         try {

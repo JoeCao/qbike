@@ -12,8 +12,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -44,6 +44,8 @@ public class IntentionService {
     LockService lockService;
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
 
     private DelayQueue<IntentionTask> intentions = new DelayQueue<>();
@@ -106,7 +108,7 @@ public class IntentionService {
                         .setStartLat(intention.getStartLatitude())
                         .setDriverId(intention.getSelectedDriver().getId());
                 try {
-                    redisTemplate.convertAndSend("intention", objectMapper.writeValueAsString(intentionVo));
+                    rabbitTemplate.convertAndSend("intention", objectMapper.writeValueAsString(intentionVo));
                 } catch (JsonProcessingException e) {
                     LOGGER.error("convert message fail" + intentionVo, e);
                 }
