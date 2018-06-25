@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "9755bb7f-6e86-46a9-84a0-b472b827c3fc",
+		"name": "qbike",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "fetchUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8050/qbike-intention/ribbon/1271",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8050",
+					"path": [
+						"qbike-intention",
+						"ribbon",
+						"1271"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "placeIntention",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"destLatitude\": 32.012518207527,\n  \"destLongitude\": 118.71334176065,\n  \"startLatitude\": 32.007969136143,\n  \"startLongitude\": 118.81722069709,\n  \"userId\": 1270\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8050/qbike-intention/intentions/place",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8050",
+					"path": [
+						"qbike-intention",
+						"intentions",
+						"place"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirmIntention",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8050/qbike-intention/intention/confirm?driverId=50&intentionId=44",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"qbike-intention",
+						"intention",
+						"confirm"
+					],
+					"query": [
+						{
+							"key": "driverId",
+							"value": "50"
+						},
+						{
+							"key": "intentionId",
+							"value": "44"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateDriverPositon",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				},
+				"description": "更新司机的坐标"
+			},
+			"response": []
+		}
+	]
+}
