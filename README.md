@@ -10,7 +10,10 @@
 
 ### Quick Start
 启动docker daemon进程  
-mvn clean install -DskipTests=true  
+mvn clean install -DskipTests=true    
+cd zipkin-server  
+mvn docker:build  
+cd ..  
 docker-compose up mysql  
 ctrl-c退出  
 docker-compose up  
@@ -19,6 +22,16 @@ http://localhost:8050
 
 ### Dev
 请安装Lombok插件，Java8 Stream + Lombok + Spring boot， 你会拥有一个全新的Java开发体验。
+
+## 项目特色
+
+* [x] `Spring Boot 1.5` + `SpringCloud Edgware.SR3`  
+* [x] `Eureka`服务注册与发现  
+* [x] `Swagger2`管理`REST API`  
+* [x] `Hystrix`服务的保护与容错  
+* [x] `Zuul`网关应用  
+* [x] 排查利器 分布式追踪`Zipkin`  
+* [ ] 升级到`Spring Boot 2.0` 和`Spring Cloud Finchley`
 
 ### 业务场景
 
