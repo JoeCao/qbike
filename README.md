@@ -24,7 +24,8 @@ http://localhost:8050
 请安装Lombok插件，Java8 Stream + Lombok + Spring boot， 你会拥有一个全新的Java开发体验。
 
 ### TODO
-
+* [x] 完全基于领域驱动设计
+* [x] 聚合根、领域对象、API的提炼按照`Event Storming`过程分析  
 * [x] `Spring Boot 1.5` + `SpringCloud Edgware.SR3`  
 * [x] `Eureka`服务注册与发现  
 * [x] `Swagger2`管理`REST API`  
