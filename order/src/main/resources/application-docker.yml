@@ -34,7 +34,7 @@ spring:
       queue: zipkin
   sleuth:
     sampler:
-      percentage: 1.0f
+      probability: 1.0f
 logging:
   level:
     root: INFO
