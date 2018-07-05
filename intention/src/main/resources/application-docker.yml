@@ -18,12 +18,18 @@ spring:
       min-idle: 3
   redis:
     host: ${REDIS_HOST}
-    timeout: 2000
+    timeout: 2000ms
     database: ${REDIS_DB}
-    pool:
-      max-active: 20
-      min-idle: 1
-      max-idle: 5
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 8
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: 1000ms
+        #最大空闲
+        max-idle: 8
+        #最小空闲
+        min-idle: 0
   rabbitmq:
     host: ${RABBIT}
     port: 5672
@@ -34,7 +40,7 @@ spring:
       queue: zipkin
   sleuth:
     sampler:
-      percentage: 1.0f
+      probability: 1.0f
 logging:
   level:
     root: INFO

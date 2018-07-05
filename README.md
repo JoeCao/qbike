@@ -11,14 +11,22 @@
 ### Quick Start
 启动docker daemon进程  
 mvn clean install -DskipTests=true    
-cd zipkin-server  
-mvn docker:build  
-cd ..  
 docker-compose up mysql  
 ctrl-c退出  
 docker-compose up  
 
 http://localhost:8050    
+
+### 测试接口
+安装postman，导入qbkie.postman_collection.json    
+调用fetchUser接口，注意，spring cloud第一次调用可能会失败，需要预热一段时间。  
+出现结果后，调用updateDriverPostion接口，将司机的坐标导入到redis中  
+然后就可以使用placeIntention接口发起一个请求
+然后再用confirmIntention接口，返回true就是成功匹配了，Order就会生成   
+注意：confirm的接口中需要输入intentionId，如果是第一次，就是1，不清楚，可以到docker的MySQL的表t_intention中找  
+
+在http://127.0.0.1:9411上可以找到zipkin对这几次调用的结果的追踪  
+![zipkin](http://os8wjvykw.bkt.clouddn.com/2018-07-05-035127.png)
 
 ### Dev
 请安装Lombok插件，Java8 Stream + Lombok + Spring boot， 你会拥有一个全新的Java开发体验。
@@ -26,13 +34,13 @@ http://localhost:8050
 ### TODO
 * [x] 完全基于领域驱动设计
 * [x] 聚合根、领域对象、API的提炼按照`Event Storming`过程分析  
-* [x] `Spring Boot 1.5` + `SpringCloud Edgware.SR3`  
+* [x] 升级到`Spring Boot 2.0` 和`Spring Cloud Finchley`
 * [x] `Eureka`服务注册与发现  
-* [x] `Swagger2`管理`REST API`  
+* [ ] `Swagger2`管理`REST API`  
 * [x] `Hystrix`服务的保护与容错  
 * [x] `Zuul`网关应用  
 * [x] `Zipkin`分布式追踪    
-* [ ] 升级到`Spring Boot 2.0` 和`Spring Cloud Finchley`
+
 
 ### 业务场景
 

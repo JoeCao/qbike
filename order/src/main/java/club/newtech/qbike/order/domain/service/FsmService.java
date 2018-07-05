@@ -31,7 +31,7 @@ public class FsmService {
      */
     public void changeState(StateRequest request) {
         //1、查找订单信息
-        Order order = orderRepository.findOne(request.getOrderId());
+        Order order = orderRepository.findById(request.getOrderId()).orElse(null);
         if (order == null) {
             throw new OrderRuntimeException("030001", new Object[]{request.getOrderId()});
         }

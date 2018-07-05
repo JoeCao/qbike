@@ -51,7 +51,7 @@ public class PositionService {
         position.setUploadTime(current);
         positionRepository.save(position);
         //更新状态表
-        DriverStatus driverStatus = driverStatusRepo.findOne(driverId);
+        DriverStatus driverStatus = driverStatusRepo.findByDriver_Id(driverId);
         if (driverStatus != null) {
             driverStatus.setCurrentLongitude(longitude);
             driverStatus.setCurrentLatitude(latitude);
@@ -90,7 +90,7 @@ public class PositionService {
                     .collect(toList());
             LOGGER.info("获取附近司机为{}", drivers);
             return drivers.stream().map(Integer::parseInt)
-                    .map(id -> driverStatusRepo.findOne(id)).collect(toList());
+                    .map(id -> driverStatusRepo.findByDriver_Id(id)).collect(toList());
         }
     }
 }

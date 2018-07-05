@@ -24,7 +24,7 @@ public class OrderController {
     public List<String> cancelOrder(int driverId, String orderId) {
         StateRequest stateRequest = new StateRequest();
         stateRequest.setEvent(Events.CANCEL);
-        stateRequest.setData(orderRepository.findOne(orderId));
+        stateRequest.setData(orderRepository.findById(orderId).get());
         stateRequest.setUId(UUID.randomUUID().toString());
         stateRequest.setOrderId(orderId);
         stateRequest.setUserId(driverId);
@@ -40,7 +40,7 @@ public class OrderController {
     public List<String> aboard(int driverId, String orderId) {
         StateRequest stateRequest = new StateRequest();
         stateRequest.setEvent(Events.ABOARD);
-        stateRequest.setData(orderRepository.findOne(orderId));
+        stateRequest.setData(orderRepository.findById(orderId).get());
         stateRequest.setUId(UUID.randomUUID().toString());
         stateRequest.setOrderId(orderId);
         stateRequest.setUserId(driverId);

@@ -94,7 +94,7 @@ public class IntentionService {
         Lock lock = null;
         try {
             lock = lockService.create(lockName);
-            Intention intention = intentionRepository.findOne(intentionId);
+            Intention intention = intentionRepository.findById(intentionId).orElse(null);
             DriverVo driverVo = userApi.findDriverById(driverId);
             int ret = intention.confirmIntention(driverVo);
             LOGGER.info("{}司机抢单{}结果为{}", driverId, intentionId, ret);
@@ -140,7 +140,7 @@ public class IntentionService {
                 IntentionTask task = intentions.take();
                 if (task != null) {
                     LOGGER.info("got a task {}", task.getIntenionId());
-                    Intention intention = intentionRepository.findOne(task.getIntenionId());
+                    Intention intention = intentionRepository.findById(task.getIntenionId()).orElse(null);
                     if (intention.canMatchDriver()) {
                         //调用position服务匹配司机
                         Collection<DriverStatusVo> result = positionApi.match(intention.getStartLongitude(), intention.getStartLatitude());
