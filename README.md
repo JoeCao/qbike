@@ -21,12 +21,12 @@ http://localhost:8050
 安装postman，导入qbkie.postman_collection.json    
 调用fetchUser接口，注意，spring cloud第一次调用可能会失败，需要预热一段时间。  
 出现结果后，调用updateDriverPostion接口，将司机的坐标导入到redis中  
-然后就可以使用placeIntention接口发起一个请求
+然后就可以使用placeIntention接口发起一个请求  
 然后再用confirmIntention接口，返回true就是成功匹配了，Order就会生成   
 注意：confirm的接口中需要输入intentionId，如果是第一次，就是1，不清楚，可以到docker的MySQL的表t_intention中找  
 
-在http://127.0.0.1:9411上可以找到zipkin对这几次调用的结果的追踪  
-![zipkin](http://os8wjvykw.bkt.clouddn.com/2018-07-05-035127.png)
+在http://127.0.0.1:9411 上可以找到zipkin对这几次调用的结果的追踪  
+![zipkin](http://os8wjvykw.bkt.clouddn.com/2018-07-05-035127.png)  
 
 ### Dev
 请安装Lombok插件，Java8 Stream + Lombok + Spring boot， 你会拥有一个全新的Java开发体验。
