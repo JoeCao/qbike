@@ -41,7 +41,7 @@ public class IntentionTest {
         candidateRepository.save(candidate);
 
         int id = intention.getMid();
-        Intention another = intentionRepository.findOne(id);
+        Intention another = intentionRepository.findById(id).orElse(null);
         Assert.assertEquals(1, another.getCandidates().size());
 
     }

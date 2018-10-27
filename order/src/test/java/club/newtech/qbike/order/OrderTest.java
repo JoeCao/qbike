@@ -28,7 +28,7 @@ public class OrderTest {
     @Test
     public void changeState() {
 
-        Order order = orderRepository.findOne("T0000000005");
+        Order order = orderRepository.findById("T0000000005").orElse(null);
         StateRequest stateRequest = new StateRequest();
         stateRequest.setOrderId(order.getOid());
         stateRequest.setUId(UUID.randomUUID().toString());
