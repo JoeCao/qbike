@@ -1,3 +1,5 @@
+server:
+  port: 8050
 spring:
   application:
     name: microservice-api-gateway
@@ -12,8 +14,7 @@ spring:
   sleuth:
     sampler:
       probability: 1.0f
-server:
-  port: 8050
+
 eureka:
   instance:
     hostname: gateway
