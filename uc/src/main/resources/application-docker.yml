@@ -16,14 +16,14 @@ spring:
     tomcat:
       max-active: 5
       min-idle: 1
-  rabbitmq:
-    host: ${RABBIT}
-    port: 5672
-    username: guest
-    password: guest
-  zipkin:
-    rabbitmq:
-      queue: zipkin
+#  rabbitmq:
+#    host: ${RABBIT}
+#    port: 5672
+#    username: guest
+#    password: guest
+#  zipkin:
+#    rabbitmq:
+#      queue: zipkin
   sleuth:
     sampler:
       probability: 1.0f
