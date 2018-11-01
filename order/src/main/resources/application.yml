@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/qbike?useUnicode=true&characterEncoding=utf8
     username: root
-    password:
+    password: 123456
     tomcat:
       max-active: 5
       min-idle: 1
