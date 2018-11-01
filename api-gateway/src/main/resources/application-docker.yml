@@ -18,9 +18,11 @@ spring:
 eureka:
   instance:
     hostname: gateway
+    prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: http://${EUREKA_HOST}:8761/eureka/
+
 zuul:
   host:
     connect-timeout-millis: 30000

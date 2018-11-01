@@ -52,4 +52,4 @@ eureka:
     serviceUrl:
       defaultZone: http://${EUREKA_HOST}:8761/eureka/    # 指定注册中心的地址
   instance:
-    preferIpAddress: true
+    prefer-ip-address: true
