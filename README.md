@@ -56,33 +56,31 @@ http://localhost:8050
 - 乘客对司机的评价
 
 
-
-![主要场景.005](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014433.jpg)
+![主要场景.005](https://user-images.githubusercontent.com/3287183/50633723-54d8b280-0f87-11e9-84a9-c8727872a443.png)
 
 
 ### 业务流程
 
-![业务流程.006](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014431.jpg)
+![业务流程.006](https://user-images.githubusercontent.com/3287183/50633730-5c985700-0f87-11e9-8232-7bf638bf70fc.png)
+
 
 ### 事件
 
-![事件.008](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014427.jpg)
-
+![事件.008](https://user-images.githubusercontent.com/3287183/50633743-6a4ddc80-0f87-11e9-8c8b-f011c84d0314.png)
 
 
 ### 命令
 
-![滴滴电动车需求.009](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014429.jpg)
-
+![滴滴电动车需求.009](https://user-images.githubusercontent.com/3287183/50633750-70dc5400-0f87-11e9-9296-a731b7f3f899.png)
 
 
 ### 聚合识别
 
-![滴滴电动车需求.010](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014428.jpg)
 
+![滴滴电动车需求.010](https://user-images.githubusercontent.com/3287183/50633761-7afe5280-0f87-11e9-8156-bdd898c1e106.png)
 
+![滴滴电动车需求.011](https://user-images.githubusercontent.com/3287183/50633776-881b4180-0f87-11e9-95ef-7286280e5af1.png)
 
-![滴滴电动车需求.011](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014430.jpg)
 
 
 
@@ -90,7 +88,7 @@ http://localhost:8050
 
 
 
-![滴滴电动车需求.012](http://os8wjvykw.bkt.clouddn.com/2017-12-06-014432.jpg)
+![image](https://user-images.githubusercontent.com/3287183/50633782-8e112280-0f87-11e9-9ac3-0f50941a2ae7.png)
 
 
 
